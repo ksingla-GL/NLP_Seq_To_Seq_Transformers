@@ -1,32 +1,7 @@
-"""
-Transformer model.  (c) 2021 Georgia Tech
-
-Copyright 2021, Georgia Institute of Technology (Georgia Tech)
-Atlanta, Georgia 30332
-All Rights Reserved
-
-Template code for CS 7643 Deep Learning
-
-Georgia Tech asserts copyright ownership of this template and all derivative
-works, including solutions to the projects assigned in this course. Students
-and other users of this template code are advised not to share it with others
-or to make it available on publicly viewable websites including repositories
-such as Github, Bitbucket, and Gitlab.  This copyright statement should
-not be removed or edited.
-
-Sharing solutions with current or future students of CS 7643 Deep Learning is
-prohibited and subject to being investigated as a GT honor code violation.
-
------do not edit anything above this line---
-"""
-
 import numpy as np
-
 import torch
 from torch import nn
 import random
-
-####### Do not modify these imports.
 
 class TransformerTranslator(nn.Module):
     """
@@ -67,21 +42,15 @@ class TransformerTranslator(nn.Module):
         
         ##############################################################################
         # TODO:
-        # Deliverable 1: Initialize what you need for the embedding lookup.          #
-        # You will need to use the max_length parameter above.                       #
+        # Will Initialize what I need for the embedding lookup.                      #
+        # I will need to use the max_length parameter above.                         #
         # Don’t worry about sine/cosine encodings- use positional encodings.         #
         ##############################################################################
         self.embeddingL = nn.Embedding(input_size, self.word_embedding_dim)      #initialize word embedding layer
         self.posembeddingL =  nn.Embedding(max_length, self.word_embedding_dim)  #initialize positional embedding layer
-
+                
         ##############################################################################
-        #                               END OF YOUR CODE                             #
-        ##############################################################################
-        
-        
-        ##############################################################################
-        # Deliverable 2: Initializations for multi-head self-attention.              #
-        # You don't need to do anything here. Do not modify this code.               #
+        # Initializations for multi-head self-attention.                             #
         ##############################################################################
         
         # Head #1
@@ -98,58 +67,37 @@ class TransformerTranslator(nn.Module):
         self.attention_head_projection = nn.Linear(self.dim_v * self.num_heads, self.hidden_dim)
         self.norm_mh = nn.LayerNorm(self.hidden_dim)
 
-        
         ##############################################################################
-        # TODO:
-        # Deliverable 3: Initialize what you need for the feed-forward layer.        # 
+        # Will Initialize I you need for the feed-forward layer.                     # 
         # Don't forget the layer normalization.                                      #
         ##############################################################################
         
         self.l1 = nn.Linear(self.hidden_dim,self.dim_feedforward)
         self.l2 = nn.Linear(self.dim_feedforward,self.hidden_dim)
-        ##############################################################################
-        #                               END OF YOUR CODE                             #
-        ##############################################################################
 
-        
         ##############################################################################
-        # TODO:
-        # Deliverable 4: Initialize what you need for the final layer (1-2 lines).   #
+        # Will Initialize what I need for the final layer.                           #
         ##############################################################################
         self.l3 = nn.Linear(self.hidden_dim,self.output_size)
-        
-        ##############################################################################
-        #                               END OF YOUR CODE                             #
-        ##############################################################################
 
-        
     def forward(self, inputs):
         """
         This function computes the full Transformer forward pass.
-        Put together all of the layers you've developed in the correct order.
+        Will put together all of the layers I have developed in the correct order.
 
         :param inputs: a PyTorch tensor of shape (N,T). These are integer lookups.
-
         :returns: the model outputs. Should be scores of shape (N,T,output_size).
         """
 
         #############################################################################
-        # TODO:
-        # Deliverable 5: Implement the full Transformer stack for the forward pass. #
-        # You will need to use all of the methods you have previously defined above.#
-        # You should only be calling TransformerTranslator class methods here.      #
-        #############################################################################
-        outputs = None      #remove this line when you start implementing your code
-        
+        # Will Implement the full Transformer stack for the forward pass.           #
+        # I will need to use all of the methods I have previously defined above.    #
+        # I should only be calling TransformerTranslator class methods here.        #
+        ############################################################################# 
         embeds = self.embed(inputs)
         hidden_states = self.multi_head_attention(embeds)
         outputs = self.feedforward_layer(hidden_states)
         outputs = self.final_layer(outputs)
-        
-        
-        ##############################################################################
-        #                               END OF YOUR CODE                             #
-        ##############################################################################
         return outputs
     
     
