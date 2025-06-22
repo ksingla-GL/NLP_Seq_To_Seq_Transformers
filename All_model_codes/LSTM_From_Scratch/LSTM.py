@@ -8,7 +8,6 @@ class MyLSTMCell(torch.nn.Module):
     super(MyLSTMCell, self).__init__()
     self.input_size = input_size
     self.hidden_size = hidden_size
-    ### BEGIN SOLUTION
     self.forgot_fc = nn.Linear(input_size,hidden_size)
     self.input_fc = nn.Linear(input_size,hidden_size)
     self.cell_fc = nn.Linear(input_size,hidden_size)
@@ -18,26 +17,21 @@ class MyLSTMCell(torch.nn.Module):
     self.input_fc_x = nn.Linear(input_size,hidden_size)
     self.cell_fc_x = nn.Linear(input_size,hidden_size)
     self.output_fc_x = nn.Linear(input_size,hidden_size)
-    ### END SOLUTION
 
   ### The Forget Gate takes in the input (x) and hidden state (h)
   ### The input and hidden state pass through their own linear compression layers,
   ### then are concatenated and passed through a sigmoid
   def forget_gate(self, x, h):
-    f = None # The gate vector to return
-    ### BEGIN SOLUTION
+    f = None 
     f = self.forgot_fc_x(x) + self.forgot_fc(h)
-    ### END SOLUTION
     return f
 
   ### The Input Gate takes the input (x) and hidden state (h)
   ### The input and hidden state pass through their own linear compression layers,
   ### then are concatenated and passed through a sigmoid
   def input_gate(self, x, h):
-    i = None # The gate vector to return
-    ### BEGIN SOLUTION
+    i = None 
     i = self.input_fc_x(x) + self.input_fc(h)
-    ### END SOLUTION
     return i
 
   ### The Cell memory gate takes the results from the input gate (i), the results from the forget gate (f)
@@ -52,19 +46,15 @@ class MyLSTMCell(torch.nn.Module):
   ### The new cell state c_next is returned
   def cell_memory(self, i, f, x, h, c_prev):
     c_next = None
-    ### BEGIN SOLUTION
     c_next = nn.functional.tanh(self.cell_fc_x(x) + self.cell_fc(h)) * i + c_prev * f
-    ### END SOLUTION
     return c_next
 
   ### The Out gate takes the original input (x) and the hidden state (h)
   ### The gate passes the input and hidden through their own compression layers and
   ### then concatenates to send through a sigmoid
   def out_gate(self, x, h):
-    o = None # The gate vector to return
-    ### BEGIN SOLUTION
+    o = None 
     o = self.output_fc_x(x) + self.output_fc(h)
-    ### END SOLUTION
     return o
 
   ### This function assembles the new hidden state, give the results of the output gate (o)
@@ -73,9 +63,7 @@ class MyLSTMCell(torch.nn.Module):
   ### elements of the output.
   def hidden_out(self, o, c_next):
     h_next = None
-    ### BEGIN SOLUTION
     h_next = o * nn.functional.tanh(c_next)
-    ### END SOLUTION
     return h_next
 
   def forward(self, x, hc):
