@@ -7,7 +7,7 @@ Created on Thu Mar 13 14:43:34 2025
 """
 import os
 try:
-    os.chdir("Desktop/OMSCS/DL/assignment3_NLP_spr25")
+    os.chdir("Desktop/NLP")
 except:
     pass
 import numpy as np
@@ -21,7 +21,7 @@ from models.Transformer import TransformerTranslator
 import csv
 
 set_seed_nb()
-"""
+
 i, n, h = 10, 2, 2
 
 encoder = Encoder(i, n, h, h,model_type="LSTM")
@@ -86,7 +86,7 @@ hidden_states = model.multi_head_attention(embeds)
 #print("Difference:", torch.sum(torch.pairwise_distance(hidden_states, d2)).item()) # should be very small (<0.01)
 outputs = model.feedforward_layer(hidden_states)
 scores = model.final_layer(outputs)
-"""
+
 train_inxs = np.load('./data/train_inxs.npy')
 val_inxs = np.load('./data/val_inxs.npy')
 train_labels = np.load('./data/train_labels.npy')
@@ -101,7 +101,7 @@ with open("./data/word_to_ix.csv", "r", encoding='utf-8') as f:
 
 
 from models.Transformer import FullTransformerTranslator
-# you will be implementing and testing the forward function here. During training, inaddition to inputs, targets are also passed to the forward function
+# We will be implementing and testing the forward function here. During training, inaddition to inputs, targets are also passed to the forward function
 set_seed_nb()
 inputs = train_inxs[0:3]
 inputs[:,0]=0
