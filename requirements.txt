@@ -1,0 +1,6 @@
+torch
+matplotlib
+tqdm
+numpy
+jupyter
+notebook
