@@ -103,7 +103,6 @@ class MyLSTMCell(torch.nn.Module):
 
 
 class LSTM(nn.Module):
-    # You will need to complete the class init function, and forward function
 
     def __init__(self, input_size, hidden_size):
         """ Init function for LSTM class
@@ -119,18 +118,17 @@ class LSTM(nn.Module):
         self.hidden_size = hidden_size
 
         ################################################################################
-        # TODO:                                                                        #
-        #   Declare LSTM weights and attributes in order specified below to pass GS.   #
-        #   You should include weights and biases regarding using nn.Parameter:        #
+        #   LSTM weights and attributes are declared in order specified below.         #
+        #   I should include weights and biases regarding using nn.Parameter:          #
         #       1) i_t: input gate                                                     #
         #       2) f_t: forget gate                                                    #
         #       3) g_t: cell gate, or the tilded cell state                            #
         #       4) o_t: output gate                                                    #
         #   for each equation above, initialize the weights,biases for input prior     #
         #   to weights, biases for hidden.                                             #
-        #   when initializing the weights consider that in forward method you          #
+        #   when initializing the weights consider that in forward method I          #
         #   should NOT transpose the weights.                                          #
-        #   You also need to include correct activation functions                      #
+        #   I also need to include correct activation functions                        #
         ################################################################################
 
         # i_t: input gate
@@ -153,9 +151,6 @@ class LSTM(nn.Module):
         self.x_output_bias = nn.Parameter(torch.zeros(self.hidden_size))
         self.w_output_weights = nn.Parameter(torch.randn(self.hidden_size, self.hidden_size))                                 
         self.w_output_bias = nn.Parameter(torch.zeros(self.hidden_size))
-        ################################################################################
-        #                              END OF YOUR CODE                                #
-        ################################################################################
         self.init_hidden()
 
     def init_hidden(self):
@@ -169,12 +164,11 @@ class LSTM(nn.Module):
         """Assumes x is of shape (batch, sequence, feature)"""
 
         ################################################################################
-        # TODO:                                                                        #
         #   Implement the forward pass of LSTM. Please refer to the equations in the   #
         #   corresponding section of jupyter notebook. Iterate through all the time    #
         #   steps and return only the hidden and cell state, h_t and c_t.              #
         #   h_t and c_t should be initialized to zeros.                                #
-        #   Note that this time you are also iterating over all of the time steps.     #
+        #   Note that this time I am also iterating over all of the time steps.     #
         ################################################################################
         h,c = torch.zeros(x.shape[0],self.hidden_size), torch.zeros(x.shape[0],self.hidden_size)  
         #x = torch.concat((x,h),dim = 2)
@@ -191,7 +185,4 @@ class LSTM(nn.Module):
             
             c = c * forget_gate + cell_gate * input_gate
             h = output_gate * nn.functional.tanh(c)
-        ################################################################################
-        #                              END OF YOUR CODE                                #
-        ################################################################################
         return (h,c)
